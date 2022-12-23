@@ -1,12 +1,13 @@
 Your question is **How to get value of Row Double-Click Row in GridView** (DevExpress). 
 
-I reproduced your issue using a minimal form and I believe the problem is coming from the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator and properly casting the objects in general. When I accessed the `GridView` using `GridControl.MainView` and explicitly cast the  `GridHitInfo` it seems to work.
+I [reproduced](https://github.com/IVSoftware/grid-view-double-click-00.git) your issue using a minimal form and I believe the problem is coming from the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator and properly casting the objects in general. When I accessed the `GridView` using `GridControl.MainView` and explicitly cast the  `GridHitInfo` it seems to work.
 
     private void gridView2_DoubleClick_1(object? sender, EventArgs e)
     {
         if ((sender is GridControl control) && e is DXMouseEventArgs args)
         {
-            var hittest = (GridHitInfo)control.MainView.CalcHitInfo(args.Location);
+            var view = (GridView)control.MainView;
+            var hittest = (GridHitInfo)view.CalcHitInfo(args.Location);
 
             // Set title bar text
             Text = $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}";
@@ -34,6 +35,8 @@ My [Minimal Reproducible Example](https://stackoverflow.com/help/minimal-reprodu
             gridControl.DoubleClick += onGridControlDoubleClick;
             var view = (GridView)gridControl.MainView;
             view.OptionsBehavior.Editable = false;
+            view.Appearance.FocusedCell.BackColor = Color.CadetBlue;
+            view.Appearance.FocusedCell.ForeColor = Color.White;
         }
         private void onGridControlDoubleClick(object? sender, EventArgs e)
         {
@@ -68,4 +71,4 @@ My [Minimal Reproducible Example](https://stackoverflow.com/help/minimal-reprodu
     }
 
 
-  [1]: https://i.stack.imgur.com/dYSZ0.png
+  [1]: https://i.stack.imgur.com/N7ZBx.png

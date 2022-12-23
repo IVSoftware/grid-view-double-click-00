@@ -20,9 +20,9 @@ namespace grid_view_double_click_00
             Animals.Add(new Animal { Name = "Daisy", Kind = Kind.Dog});
             gridControl.DoubleClick += onGridControlDoubleClick;
             var view = (GridView)gridControl.MainView;
+            view.OptionsBehavior.Editable = false;
             view.Appearance.FocusedCell.BackColor = Color.CadetBlue;
             view.Appearance.FocusedCell.ForeColor = Color.White;
-            view.OptionsBehavior.Editable = false;
         }
         private void onGridControlDoubleClick(object? sender, EventArgs e)
         {
