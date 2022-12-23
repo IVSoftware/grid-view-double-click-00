@@ -1,6 +1,6 @@
 Your question is **How to get value of Row Double-Click Row in GridView** (DevExpress). 
 
-I reproduced this issue using a minimal form and I believe the problem is coming from `sender as GridView` which seems to evaluate null (because the sender `is GridControl` and evidently is not a compatible reference per the the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator documentation). 
+I reproduced this issue using a minimal form and I believe the problem is coming from `sender as GridView` which seems to evaluate null (because the sender `is GridControl` and evidently is not a compatible reference per the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator documentation). 
 
 When I cast the objects correctly, everything seems to work.
 
@@ -8,20 +8,19 @@ When I cast the objects correctly, everything seems to work.
     {
         if (
                (sender is GridControl control) &&
-               (e is DXMouseEventArgs args) &&
-               (control.MainView is GridView gridView))
+               (control.MainView is GridView gridView) &&
+               (e is DXMouseEventArgs args))
         {
             var hittest = gridView.CalcHitInfo(args.Location);
-
-            // Set title bar text
-            Text = $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}";
 
             // BTW don't block the double-click event to do this.
             BeginInvoke(() =>
             {
-                MessageBox.Show(Animals[hittest.RowHandle].ToString());
+                MessageBox.Show(
+                    text: Animals[hittest.RowHandle].ToString(),
+                    caption: $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}"
+                );
             });
-        }
         }
     }
 
@@ -46,17 +45,21 @@ My [minimal reproducible example](https://stackoverflow.com/help/minimal-reprodu
         }
         private void onGridControlDoubleClick(object? sender, EventArgs e)
         {
-            if ((sender is GridControl control) && e is DXMouseEventArgs args)
+            if (
+                   (sender is GridControl control) &&
+                   (control.MainView is GridView gridView) &&
+                   (e is DXMouseEventArgs args))
             {
-                var hittest = (GridHitInfo)control.MainView.CalcHitInfo(args.Location);
+                var hittest = gridView.CalcHitInfo(args.Location);
 
-                // Set title bar text
-                Text = $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}";
-
-                // BTW don't block the click event to do this.
+                // BTW don't block the double-click event to do this.
                 BeginInvoke(() =>
-                    MessageBox.Show(Animals[hittest.RowHandle].ToString())
-                );
+                {
+                    MessageBox.Show(
+                       text: Animals[hittest.RowHandle].ToString(),
+                       caption: $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}"
+                    );
+                });
             }
         }
         public BindingList<Animal> Animals { get; } = new BindingList<Animal>();
@@ -73,8 +76,7 @@ My [minimal reproducible example](https://stackoverflow.com/help/minimal-reprodu
         public string ID { get; set; } = Guid.NewGuid().ToString().Substring(0,8);
         public string? Name { get; set; }
         public Kind Kind { get; set; }
-        public override string ToString() => $"{Name}, {Kind}";
+        public override string ToString() => $"{Name} ({Kind})";
     }
-
 
   [1]: https://i.stack.imgur.com/rjahF.png

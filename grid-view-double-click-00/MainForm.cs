@@ -27,19 +27,19 @@ namespace grid_view_double_click_00
         private void onGridControlDoubleClick(object? sender, EventArgs e)
         {
             if (
-                     (sender is GridControl control) &&
-                     (e is DXMouseEventArgs args) &&
-                     (control.MainView is GridView gridView))
+                (sender is GridControl control) &&
+                (control.MainView is GridView gridView) &&
+                (e is DXMouseEventArgs args))
             {
                 var hittest = gridView.CalcHitInfo(args.Location);
-
-                // Set title bar text
-                Text = $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}";
 
                 // BTW don't block the double-click event to do this.
                 BeginInvoke(() =>
                 {
-                    MessageBox.Show(Animals[hittest.RowHandle].ToString());
+                    MessageBox.Show(
+                       text: Animals[hittest.RowHandle].ToString(),
+                       caption: $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}"
+                    );
                 });
             }
         }
