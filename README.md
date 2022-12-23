@@ -1,6 +1,6 @@
 Your question is **How to get value of Row Double-Click Row in GridView** (DevExpress). 
 
-I reproduced your issue using a minimal form and I believe the problem is coming from the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator and properly casting the object in general. When I accessed the `GridView` using `GridControl.MainView` and explicitly cast the  `GridHitInfo` it seems to work.
+I reproduced your issue using a minimal form and I believe the problem is coming from the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator and properly casting the objects in general. When I accessed the `GridView` using `GridControl.MainView` and explicitly cast the  `GridHitInfo` it seems to work.
 
     private void gridView2_DoubleClick_1(object? sender, EventArgs e)
     {
