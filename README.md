@@ -1,28 +1,34 @@
 Your question is **How to get value of Row Double-Click Row in GridView** (DevExpress). 
 
-I reproduced your issue using a minimal form and I believe the problem is coming from the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator and properly casting the objects in general. When I accessed the `GridView` using `GridControl.MainView` and explicitly cast the  `GridHitInfo` it seems to work.
+I reproduced this issue using a minimal form and I believe the problem is coming from `sender as GridView` which seems to evaluate null (because the sender `is GridControl` and evidently is not a compatible reference per the the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator documentation). 
+
+When I cast the objects correctly, everything seems to work.
 
     private void gridView2_DoubleClick_1(object? sender, EventArgs e)
     {
-        if ((sender is GridControl control) && e is DXMouseEventArgs args)
+        if (
+               (sender is GridControl control) &&
+               (e is DXMouseEventArgs args) &&
+               (control.MainView is GridView gridView))
         {
-            var view = (GridView)control.MainView;
-            var hittest = (GridHitInfo)view.CalcHitInfo(args.Location);
+            var hittest = gridView.CalcHitInfo(args.Location);
 
             // Set title bar text
             Text = $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}";
 
             // BTW don't block the double-click event to do this.
             BeginInvoke(() =>
-                MessageBox.Show(Animals[hittest.RowHandle].ToString())
-            );
+            {
+                MessageBox.Show(Animals[hittest.RowHandle].ToString());
+            });
+        }
         }
     }
 
 [![double-click response][1]][1]
 
 ***
-My [Minimal Reproducible Example](https://stackoverflow.com/help/minimal-reproducible-example) uses this code to set up the `DevExpress.XtraGrid.GridControl`.
+My [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) uses this code to set up the `DevExpress.XtraGrid.GridControl`.
 
     public partial class MainForm : Form
     {
@@ -71,4 +77,4 @@ My [Minimal Reproducible Example](https://stackoverflow.com/help/minimal-reprodu
     }
 
 
-  [1]: https://i.stack.imgur.com/N7ZBx.png
+  [1]: https://i.stack.imgur.com/rjahF.png
