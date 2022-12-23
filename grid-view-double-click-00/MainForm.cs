@@ -27,7 +27,7 @@ namespace grid_view_double_click_00
             if ((sender is GridControl control) && e is DXMouseEventArgs args)
             {
                 var view = (GridView)control.MainView;
-                var hittest = (GridHitInfo) view.CalcHitInfo(args.Location);
+                var hittest = (GridHitInfo)view.CalcHitInfo(args.Location);
 
                 // Set title bar text
                 Text = $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}";
@@ -35,10 +35,6 @@ namespace grid_view_double_click_00
                 // BTW don't block the click event to do this.
                 BeginInvoke(() =>
                     MessageBox.Show(Animals[hittest.RowHandle].ToString())
-                );
-
-                BeginInvoke(() =>
-                    view.SelectCell(0, view.Columns[nameof(Animal.Kind)])
                 );
             }
         }
