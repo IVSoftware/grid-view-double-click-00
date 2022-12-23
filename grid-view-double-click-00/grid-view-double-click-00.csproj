@@ -13,4 +13,8 @@
     <PackageReference Include="DevExpress.Win.Design" Version="22.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Screenshots\" />
+  </ItemGroup>
+
 </Project>
