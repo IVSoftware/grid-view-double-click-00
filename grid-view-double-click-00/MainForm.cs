@@ -26,28 +26,18 @@ namespace grid_view_double_click_00
         }
         private void onGridControlDoubleClick(object? sender, EventArgs e)
         {
-
-            DXMouseEventArgs ea = e as DXMouseEventArgs;
-            GridView view = sender as GridView;
-            GridHitInfo info = view.CalcHitInfo(ea.Location);
-            if (info.InRow || info.InRowCell)
+            if ((sender is GridControl control) && e is DXMouseEventArgs args)
             {
-                string colCaption = info.Column == null ? "N/A" : info.Column.GetCaption();
-                MessageBox.Show(string.Format("DoubleClick on row: {0}, column: {1}.", info.RowHandle, colCaption));
+                var hittest = (GridHitInfo)control.MainView.CalcHitInfo(args.Location);
+
+                // Set title bar text
+                Text = $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}";
+
+                // BTW don't block the click event to do this.
+                BeginInvoke(() =>
+                    MessageBox.Show(Animals[hittest.RowHandle].ToString())
+                );
             }
-
-            //if ((sender is GridControl control) && e is DXMouseEventArgs args) 
-            //{
-            //    var hittest = (GridHitInfo)control.MainView.CalcHitInfo(args.Location);
-
-            //    // Set title bar text
-            //    Text = $"DoubleClick on row: {hittest.RowHandle}, column: {hittest.Column.GetCaption()}";
-
-            //    // BTW don't block the click event to do this.
-            //    BeginInvoke(() => 
-            //        MessageBox.Show(Animals[hittest.RowHandle].ToString())
-            //    );
-            //}
         }
         public BindingList<Animal> Animals { get; } = new BindingList<Animal>();
     }
