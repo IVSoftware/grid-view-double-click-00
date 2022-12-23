@@ -2,11 +2,9 @@ using System.ComponentModel;
 using static DevExpress.DataProcessing.InMemoryDataProcessor.AddSurrogateOperationAlgorithm;
 using System.ComponentModel.DataAnnotations;
 using DevExpress.XtraGrid.Views.Grid;
-using DevExpress.XtraGrid.Columns;
 using DevExpress.Utils;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
-using DevExpress.XtraBars.Docking;
 
 namespace grid_view_double_click_00
 {

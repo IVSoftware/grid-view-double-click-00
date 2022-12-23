@@ -1,4 +1,6 @@
-Your question is **How to get value of Row Double-Click Row in GridView**. I [reproduced]() your issue using a minimal form and I believe the problem is coming from the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator. When I replaced the call with an explicit cast it seems to work.
+Your question is **How to get value of Row Double-Click Row in GridView** (DevExpress). 
+
+I [reproduced](https://github.com/IVSoftware/grid-view-double-click-00.git) your issue using a minimal form and I believe the problem is coming from the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator. When I accessed the `GridView` using `GridControl.MainView` and explicitly cast the  `GridHitInfo` it seems to work.
 
     private void gridView2_DoubleClick_1(object? sender, EventArgs e)
     {
@@ -16,9 +18,10 @@ Your question is **How to get value of Row Double-Click Row in GridView**. I [re
         }
     }
 
-    ![screenshot]()
-    ***
-    [Minimal Reproducible Example](https://stackoverflow.com/help/minimal-reproducible-example)
+[![double-click response][1]][1]
+
+***
+[Minimal Reproducible Example](https://stackoverflow.com/help/minimal-reproducible-example) uses this code to set up the `DevExpress.XtraGrid.GridControl`.
 
     public partial class MainForm : Form
     {
@@ -64,3 +67,5 @@ Your question is **How to get value of Row Double-Click Row in GridView**. I [re
         public override string ToString() => $"{Name}, {Kind}";
     }
 
+
+  [1]: https://i.stack.imgur.com/dYSZ0.png
