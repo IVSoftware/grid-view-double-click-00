@@ -36,6 +36,10 @@ namespace grid_view_double_click_00
                 BeginInvoke(() =>
                     MessageBox.Show(Animals[hittest.RowHandle].ToString())
                 );
+
+                BeginInvoke(() =>
+                    view.SelectCell(0, view.Columns[nameof(Animal.Kind)])
+                );
             }
         }
         public BindingList<Animal> Animals { get; } = new BindingList<Animal>();
