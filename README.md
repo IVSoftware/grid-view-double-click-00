@@ -78,5 +78,5 @@ My [minimal reproducible example](https://stackoverflow.com/help/minimal-reprodu
         public Kind Kind { get; set; }
         public override string ToString() => $"{Name} ({Kind})";
     }
-
-  [1]: https://i.stack.imgur.com/rjahF.png
+    
+  [1]: https://i.stack.imgur.com/sD5Vw.png

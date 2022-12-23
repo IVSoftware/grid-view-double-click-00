@@ -27,9 +27,9 @@ namespace grid_view_double_click_00
         private void onGridControlDoubleClick(object? sender, EventArgs e)
         {
             if (
-                (sender is GridControl control) &&
-                (control.MainView is GridView gridView) &&
-                (e is DXMouseEventArgs args))
+                   (sender is GridControl control) &&
+                   (control.MainView is GridView gridView) &&
+                   (e is DXMouseEventArgs args))
             {
                 var hittest = gridView.CalcHitInfo(args.Location);
 
