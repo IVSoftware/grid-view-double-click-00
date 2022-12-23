@@ -20,6 +20,8 @@ namespace grid_view_double_click_00
             Animals.Add(new Animal { Name = "Daisy", Kind = Kind.Dog});
             gridControl.DoubleClick += onGridControlDoubleClick;
             var view = (GridView)gridControl.MainView;
+            view.Appearance.FocusedCell.BackColor = Color.CadetBlue;
+            view.Appearance.FocusedCell.ForeColor = Color.White;
             view.OptionsBehavior.Editable = false;
         }
         private void onGridControlDoubleClick(object? sender, EventArgs e)
@@ -34,8 +36,9 @@ namespace grid_view_double_click_00
 
                 // BTW don't block the click event to do this.
                 BeginInvoke(() =>
-                    MessageBox.Show(Animals[hittest.RowHandle].ToString())
-                );
+                {
+                    MessageBox.Show(Animals[hittest.RowHandle].ToString());
+                });
             }
         }
         public BindingList<Animal> Animals { get; } = new BindingList<Animal>();
