@@ -24,7 +24,6 @@ namespace grid_view_double_click_00
             var view = (GridView)gridControl.MainView;
             view.OptionsBehavior.Editable = false;
         }
-
         private void onGridControlDoubleClick(object? sender, EventArgs e)
         {
             if((sender is GridControl control) && e is DXMouseEventArgs args) 
@@ -36,7 +35,6 @@ namespace grid_view_double_click_00
                 );
             }
         }
-
         public BindingList<Animal> Animals { get; } = new BindingList<Animal>();
     }
     public enum Kind
