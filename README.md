@@ -1,6 +1,6 @@
 Your question is **How to get value of Row Double-Click Row in GridView** (DevExpress). 
 
-I reproduced this issue using a minimal form and I believe the problem is coming from `sender as GridView` which seems to evaluate null (because the sender `is GridControl` and evidently is not a compatible reference per the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator documentation). 
+Referencing `DevExpress.Win.Design 22.1.6` NuGet I was able to reproduce this issue using a minimal form and I believe the problem is coming from `sender as GridView` which seems to evaluate null (because the sender `is GridControl` and evidently is not a compatible reference per the [as](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator) operator documentation). 
 
 When I cast the objects correctly, everything seems to work.
 
